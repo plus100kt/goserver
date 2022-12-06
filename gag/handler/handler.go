@@ -4,19 +4,29 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/plus100kt/goserver/gag/model"
 )
 
-// Handler struct holds required services for handler to function
-type Handler struct{}
+// handler layer 내 service 정의
+type Handler struct {
+	DeviceService model.DeviceService
+	UserService   model.UserService
+}
 
-// Config will hold services that will eventually be injected into this
-// handler layer on handler initialization
+// 의존성이 주입되며 handler 레이어 초기설정
 type Config struct {
-	R *gin.Engine
+	R             *gin.Engine
+	UserService   model.UserService
+	DeviceService model.DeviceService
 }
 
 func NewHandler(c *Config) {
-	h := &Handler{} // currently has no properties
+	// 의존성 주입
+	h := &Handler{
+		UserService:   c.UserService,
+		DeviceService: c.DeviceService,
+	}
+
 	v1 := c.R.Group("/v1")
 	{
 		v1.POST("/device/register", h.DeviceRegister)
@@ -41,12 +51,6 @@ func (h *Handler) User(c *gin.Context) {
 func (h *Handler) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"hello": "it's me",
-	})
-}
-
-func (h *Handler) DeviceRegister(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"hello": "it's signup",
 	})
 }
 

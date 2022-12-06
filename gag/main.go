@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/plus100kt/goserver/gag/handler"
 )
 
 func main() {
@@ -18,10 +19,8 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/api/gag", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"hello": "world",
-		})
+	handler.NewHandler(&handler.Config{
+		R: router,
 	})
 
 	srv := &http.Server{

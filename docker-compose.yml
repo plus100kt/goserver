@@ -25,7 +25,7 @@ services:
       - "8080"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.gag.rule=Host(`malcorp.test`) && PathPrefix(`/api/gag`)"
+      - "traefik.http.routers.gag.rule=Host(`gag.com`) && PathPrefix(`/v1`)"
     environment:
       - ENV=dev
     volumes:

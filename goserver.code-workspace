@@ -6,7 +6,7 @@
       },
       {
         "name": "goserver",
-        "path": "goserver"
+        "path": "."
       }
     ],
     "settings": {

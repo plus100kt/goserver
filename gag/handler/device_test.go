@@ -49,7 +49,7 @@ func TestDevice(t *testing.T) {
 			DeviceService: mockDeviceService,
 		})
 
-		request, err := http.NewRequest(http.MethodPost, "/register", nil)
+		request, err := http.NewRequest(http.MethodPost, "v1/device/register", nil)
 		assert.NoError(t, err)
 
 		router.ServeHTTP(rr, request)
@@ -78,7 +78,7 @@ func TestDevice(t *testing.T) {
 			DeviceService: mockDeviceService,
 		})
 
-		request, err := http.NewRequest(http.MethodPost, "/register", nil)
+		request, err := http.NewRequest(http.MethodPost, "v1/device/register", nil)
 		assert.NoError(t, err)
 
 		router.ServeHTTP(rr, request)

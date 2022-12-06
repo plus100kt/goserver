@@ -34,14 +34,10 @@ func (m *MockDeviceService) Register(ctx context.Context, uuid string) (*model.D
 }
 
 func (m *MockDeviceService) Get(ctx context.Context, uuid string) (*model.Device, error) {
-	// args that will be passed to "Return" in the tests, when function
-	// is called with a uid. Hence the name "ret"
 	ret := m.Called(ctx, uuid)
 
-	// first value passed to "Return"
 	var r0 *model.Device
 	if ret.Get(0) != nil {
-		// we can just return this if we know we won't be passing function to "Return"
 		r0 = ret.Get(0).(*model.Device)
 	}
 

@@ -29,10 +29,13 @@ func NewHandler(c *Config) {
 
 	v1 := c.R.Group("/v1")
 	{
-		v1.POST("/device/register", h.DeviceRegister)
+		deviceGroup := v1.Group("/device")
+		{
+			deviceGroup.POST("/register", h.DeviceRegister)
+		}
 		userGroup := v1.Group("/user")
 		{
-			userGroup.GET("/", h.User)
+			userGroup.GET("/", h.UserGet)
 			userGroup.POST("/login", h.Login)
 		}
 		subjectGroup := v1.Group("/subject")
@@ -40,12 +43,6 @@ func NewHandler(c *Config) {
 			subjectGroup.GET("/", h.Subject)
 		}
 	}
-}
-
-func (h *Handler) User(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"hello": "it's me",
-	})
 }
 
 func (h *Handler) Login(c *gin.Context) {

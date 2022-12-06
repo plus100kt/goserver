@@ -9,7 +9,7 @@ type DeviceService interface {
 }
 
 type UserService interface {
-	Get(id string) (*User, error)
+	Get(ctx context.Context, id string) (*User, error)
 	Login(ctx context.Context, u *User) error
 }
 

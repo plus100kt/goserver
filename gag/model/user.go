@@ -16,6 +16,7 @@ type (
 		Name     string `db:"name" json:"name"`
 		Email    string `db:"email" json:"email"`
 		ImageURL string `db:"image_url" json:"image_url"`
+		Cookie   string `db:"cookie" json:"cookie"`
 
 		// timestamp
 		CreatedAt time.Time `db:"created_at" json:"created_at"`

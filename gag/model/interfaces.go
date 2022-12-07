@@ -2,25 +2,24 @@ package model
 
 import "context"
 
-// handler layer
-type DeviceService interface {
-	Get(ctx context.Context, uuid string) (*Device, error)
-	Register(ctx context.Context, uuid string) (*Device, error)
-}
-
 type UserService interface {
 	Get(ctx context.Context, id string) (*User, error)
-	Login(ctx context.Context, u *User) error
+	DeviceRegister(ctx context.Context, uuid string) (*Device, error)
+	Login(ctx context.Context, key string, u *User) (*User, error)
 }
 
 // repository layer
 type DeviceRepository interface {
-	FindByID(uuid string) (*Device, error)
+	FindByID(ctx context.Context, uuid string) (*Device, error)
 	Create(ctx context.Context, d *Device) error
 	Delete(ctx context.Context, uuid string) error
 }
 
 type UserRepository interface {
-	FindByID(id string) (*User, error)
+	FindByID(ctx context.Context, id string) (*User, error)
 	Create(ctx context.Context, u *User) error
+}
+
+type EclassRepository interface {
+	Login(ctx context.Context, key string, u *User) (*User, error)
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/plus100kt/goserver/gag/eclass/model"
 )
 
-func (s *eclass) GetStudent(ctx context.Context) (*model.Student, error) {
+func (e *Eclass) GetStudent(ctx context.Context) (*model.Student, error) {
 	student := &model.Student{}
 	// request
 	res, err := http.Get("https://eclass.tukorea.ac.kr/ilos/mp/myinfo_form.acl")

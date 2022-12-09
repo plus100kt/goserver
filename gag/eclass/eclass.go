@@ -6,16 +6,12 @@ import (
 	"github.com/plus100kt/goserver/gag/eclass/model"
 )
 
-type eclass struct {
+type Eclass struct {
 	cookies []*http.Cookie
 }
 
-type EclasssConfig struct {
-	cookies []*http.Cookie
-}
-
-func NewEclass(c *EclasssConfig) model.Eclass {
-	return &eclass{
-		cookies: c.cookies,
+func NewEclass(e *Eclass) model.Eclass {
+	return &Eclass{
+		cookies: e.cookies,
 	}
 }

@@ -11,7 +11,7 @@ import (
 	"github.com/plus100kt/goserver/gag/util"
 )
 
-func (s *eclass) Login(ctx context.Context, body *model.LoginBody) error {
+func (e *Eclass) Login(ctx context.Context, body *model.LoginBody) error {
 	// struct to formdata
 	ct, formData, err := util.StructToForm(&body)
 	if err != nil {
@@ -39,7 +39,7 @@ func (s *eclass) Login(ctx context.Context, body *model.LoginBody) error {
 	if strings.Contains(responseString, `document.location.href="https://eclass.tukorea.ac.kr/ilos/main/main_form.acl"`) {
 
 		// set cookie
-		s.cookies = res.Cookies()
+		e.cookies = res.Cookies()
 		return nil
 	}
 

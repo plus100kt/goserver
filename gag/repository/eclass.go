@@ -3,22 +3,19 @@ package repository
 import (
 	"context"
 
+	"github.com/plus100kt/goserver/gag/eclass"
 	eclassModel "github.com/plus100kt/goserver/gag/eclass/model"
 	"github.com/plus100kt/goserver/gag/model"
 	"github.com/plus100kt/goserver/gag/util"
 )
 
 type eclassRepository struct {
-	Eclass eclassModel.Eclass
+	Eclass *eclass.Eclass
 }
 
-type EclassConfg struct {
-	Eclass eclassModel.Eclass
-}
-
-func NewEclassRepository(c *EclassConfg) model.EclassRepository {
+func NewEclassRepository(c *eclass.Eclass) model.EclassRepository {
 	return &eclassRepository{
-		Eclass: c.Eclass,
+		Eclass: c,
 	}
 }
 
@@ -56,11 +53,9 @@ func (r eclassRepository) GetUser(ctx context.Context, u *model.User) error {
 		return err
 	}
 
-	u = &model.User{
-		Name:     student.Name,
-		Email:    student.Email,
-		ImageURL: student.ImageUrl,
-	}
+	u.Name = student.Name
+	u.Email = student.Email
+	u.ImageURL = student.ImageUrl
 
 	return err
 }

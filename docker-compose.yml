@@ -1,5 +1,12 @@
 version: "3.8"
 services:
+  mysql-gag:
+    image: 'mysql/mysql-server:latest'
+    container_name: mysql-gag
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
   reverse-proxy:
     # The official v2 Traefik docker image
     image: traefik:v2.2
@@ -32,3 +39,6 @@ services:
       - ./gag:/go/src/app
     # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
     command: reflex -r "\.go$$" -s -- sh -c "go run ./"
+    depends_on:
+      - mysql-gag
+      - reverse-proxy

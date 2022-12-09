@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/plus100kt/goserver/gag/eclass"
 	"github.com/plus100kt/goserver/gag/handler"
 	"github.com/plus100kt/goserver/gag/repository"
 	"github.com/plus100kt/goserver/gag/service"
@@ -18,7 +17,7 @@ func inject(d *dataSources) (*gin.Engine, error) {
 	 */
 	userRepository := repository.NewUserRepository(d.DB)
 	deviceRepository := repository.NewDeviceRepository(d.DB)
-	eclassRepository := repository.NewEclassRepository(&repository.EclassConfg{})
+	eclassRepository := repository.NewEclassRepository(d.Eclass)
 
 	/*
 	 * service layer
@@ -31,7 +30,6 @@ func inject(d *dataSources) (*gin.Engine, error) {
 
 	router := gin.Default()
 
-	eclass.NewEclass(&eclass.EclasssConfig{})
 	handler.NewHandler(&handler.Config{
 		R:           router,
 		UserService: userService,

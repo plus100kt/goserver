@@ -19,7 +19,7 @@ func (h *Handler) DeviceRegister(c *gin.Context) {
 	}
 
 	uuid := req.UUID
-	public_key, err := h.UserService.DeviceRegister(c, uuid)
+	device, err := h.UserService.DeviceRegister(c, uuid)
 	if err != nil {
 		log.Printf("register error: %v\n%v", uuid, err)
 		e := apperrors.NewInternal()
@@ -31,6 +31,6 @@ func (h *Handler) DeviceRegister(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"public_key": public_key,
+		"public_key": device.RsaPublicKey,
 	})
 }

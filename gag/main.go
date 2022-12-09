@@ -8,8 +8,6 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"github.com/plus100kt/goserver/gag/handler"
 )
 
 func main() {
@@ -24,10 +22,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failure to inject data sources: %v\n", err)
 	}
-
-	handler.NewHandler(&handler.Config{
-		R: router,
-	})
 
 	srv := &http.Server{
 		Addr:    ":8080",

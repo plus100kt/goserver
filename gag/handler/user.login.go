@@ -28,7 +28,7 @@ func (h *Handler) Login(c *gin.Context) {
 		AesPassword: req.Password,
 	}
 
-	u, err := h.UserService.Login(c, req.Key, u)
+	err := h.UserService.Login(c, req.Key, u)
 	if err != nil {
 		log.Printf("Failed to sign up user: %v\n", err.Error())
 		c.JSON(apperrors.Status(err), gin.H{

@@ -9,43 +9,58 @@ import (
 )
 
 type eclassRepository struct {
-	EclassService eclassModel.EclassService
+	Eclass eclassModel.Eclass
 }
 
 type EclassConfg struct {
-	EclassService eclassModel.EclassService
+	Eclass eclassModel.Eclass
 }
 
 func NewEclassRepository(c *EclassConfg) model.EclassRepository {
 	return &eclassRepository{
-		EclassService: c.EclassService,
+		Eclass: c.Eclass,
 	}
 }
 
-func (r eclassRepository) Login(ctx context.Context, key string, u *model.User) (*model.User, error) {
+func (r eclassRepository) Login(ctx context.Context, key string, u *model.User) error {
 	// RSA 복호화
 	rh := util.RSAHelper{}
 	rh.PrivateFromStringPEM(u.RsaPrivateKey)
 
 	aesKey, err := rh.DecryptString(key)
 	if err != nil {
-		return u, err
+		return err
 	}
 
 	iv := util.PKCS5Padding([]byte(aesKey[0:8]), 16)
 	password := util.AESDecrypt([]byte(u.AesPassword), []byte(aesKey), iv)
 
-	var LoginBody *eclassModel.LoginBody
-
-	LoginBody = &eclassModel.LoginBody{
+	body := &eclassModel.LoginBody{
 		Usr_id:  u.ID,
 		Usr_pwd: string(password),
 	}
 
 	// 로그인
-	string, err := r.EclassService.Login(LoginBody)
+	err = r.Eclass.Login(ctx, body)
+	if err != nil {
+		return err
+	}
 
-	// parsing
+	return err
+}
 
-	return u, err
+func (r eclassRepository) GetUser(ctx context.Context, u *model.User) error {
+	// 로그인
+	student, err := r.Eclass.GetStudent(ctx)
+	if err != nil {
+		return err
+	}
+
+	u = &model.User{
+		Name:     student.Name,
+		Email:    student.Email,
+		ImageURL: student.ImageUrl,
+	}
+
+	return err
 }

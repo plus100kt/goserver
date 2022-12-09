@@ -1,4 +1,4 @@
-package service
+package eclass
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 	"github.com/plus100kt/goserver/gag/eclass/model"
 )
 
-type eclassService struct {
+type eclass struct {
 	cookies []*http.Cookie
 }
 
@@ -14,8 +14,8 @@ type EclasssConfig struct {
 	cookies []*http.Cookie
 }
 
-func NewEclassService(c *EclasssConfig) model.EclassService {
-	return &eclassService{
+func NewEclass(c *EclasssConfig) model.Eclass {
+	return &eclass{
 		cookies: c.cookies,
 	}
 }

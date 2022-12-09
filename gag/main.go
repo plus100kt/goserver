@@ -9,15 +9,21 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/plus100kt/goserver/gag/handler"
 )
 
 func main() {
-	// you could insert your favorite logger here for structured or leveled logging
 	log.Println("Starting server...")
 
-	router := gin.Default()
+	ds, err := initDS()
+	if err != nil {
+		log.Fatalf("Unable to initialize data sources: %v\n", err)
+	}
+
+	router, err := inject(ds)
+	if err != nil {
+		log.Fatalf("Failure to inject data sources: %v\n", err)
+	}
 
 	handler.NewHandler(&handler.Config{
 		R: router,

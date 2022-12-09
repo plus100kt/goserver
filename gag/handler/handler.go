@@ -30,7 +30,6 @@ func NewHandler(c *Config) {
 		}
 		userGroup := v1.Group("/user")
 		{
-			userGroup.GET("/", h.UserGet)
 			userGroup.POST("/login", h.Login)
 		}
 	}

@@ -7,19 +7,19 @@ import (
 type (
 	User struct {
 		// 보안 계정 정보
-		ID            string `db:"id" json:"id"`
-		UUID          string `db:"uuid" json:"uuid"`
-		RsaPrivateKey string `db:"rsa_private_key" json:"rsa_private_key"`
-		AesPassword   string `db:"aes_password" json:"aes_password"`
+		ID            string `gorm:"primaryKey; not null" json:"id"`
+		UUID          string `gorm:"not null" json:"uuid"`
+		RsaPrivateKey string `gorm:"not null" json:"rsa_private_key"`
+		AesPassword   string `gorm:"not null" json:"aes_password"`
 
 		// 개인 정보
-		Name     string `db:"name" json:"name"`
-		Email    string `db:"email" json:"email"`
-		ImageURL string `db:"image_url" json:"image_url"`
-		Cookie   string `db:"cookie" json:"cookie"`
+		Name     string `gorm:"not null" json:"name"`
+		Email    string `gorm:"not null" json:"email"`
+		ImageURL string `gorm:"not null" json:"image_url"`
+		Cookie   string `gorm:"not null" json:"cookie"`
 
 		// timestamp
-		CreatedAt time.Time `db:"created_at" json:"created_at"`
-		UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
+		CreatedAt time.Time `gorm:"not null" json:"created_at"`
+		UpdatedAt time.Time `gorm:"not null" json:"updated_at"`
 	}
 )

@@ -5,11 +5,15 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/plus100kt/goserver/gag/model/apperrors"
+	"github.com/plus100kt/goserver/gag/model/app"
 )
 
 type deviceRegisterReq struct {
 	UUID string `json:"uuid" binding: "required,uuid"`
+}
+
+type deviceRegisterRes struct {
+	PublicKey string `json:"public_key"`
 }
 
 func (h *Handler) DeviceRegister(c *gin.Context) {
@@ -22,7 +26,7 @@ func (h *Handler) DeviceRegister(c *gin.Context) {
 	device, err := h.UserService.DeviceRegister(c, uuid)
 	if err != nil {
 		log.Printf("register error: %v\n%v", uuid, err)
-		e := apperrors.NewInternal()
+		e := app.NewInternal()
 
 		c.JSON(e.Status(), gin.H{
 			"error": e,
@@ -30,7 +34,9 @@ func (h *Handler) DeviceRegister(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"public_key": device.RsaPublicKey,
+	res := app.NewSuccess(deviceRegisterRes{
+		PublicKey: device.RsaPublicKey,
 	})
+
+	c.IndentedJSON(http.StatusOK, res)
 }

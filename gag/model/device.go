@@ -3,10 +3,10 @@ package model
 type (
 	Device struct {
 		// 디바이스 ID
-		UUID string `db:"uuid" json:"uuid"`
+		UUID string `gorm:"primaryKey; not null" json:"uuid"`
 
 		// RSA Key
-		RsaPrivateKey string `db:"rsa_private_key" json:"rsa_private_key"`
-		RsaPublicKey  string `db:"rsa_public_key" json:"rsa_public_key"`
+		RsaPrivateKey string `gorm:"not null" json:"rsa_private_key"`
+		RsaPublicKey  string `gorm:"not null" json:"rsa_public_key"`
 	}
 )
